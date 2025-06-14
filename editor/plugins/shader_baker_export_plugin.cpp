@@ -111,9 +111,9 @@ bool ShaderBakerExportPlugin::_begin_customize_resources(const Ref<EditorExportP
 
 	StringBuilder to_hash;
 	to_hash.append("[GodotVersionNumber]");
-	to_hash.append(VERSION_NUMBER);
+	to_hash.append(GODOT_VERSION_NUMBER);
 	to_hash.append("[GodotVersionHash]");
-	to_hash.append(VERSION_HASH);
+	to_hash.append(GODOT_VERSION_HASH);
 	to_hash.append("[Renderer]");
 	to_hash.append(shader_cache_renderer_name);
 	customization_configuration_hash = to_hash.as_string().hash64();
@@ -129,6 +129,10 @@ bool ShaderBakerExportPlugin::_begin_customize_resources(const Ref<EditorExportP
 	if (vrs_mode != 0) {
 		renderer_features.set_flag(RenderingShaderLibrary::FEATURE_VRS_BIT);
 	}
+
+	// Both FP16 and FP32 variants should be included.
+	renderer_features.set_flag(RenderingShaderLibrary::FEATURE_FP16_BIT);
+	renderer_features.set_flag(RenderingShaderLibrary::FEATURE_FP32_BIT);
 
 	RendererSceneRenderRD::get_singleton()->enable_features(renderer_features);
 
